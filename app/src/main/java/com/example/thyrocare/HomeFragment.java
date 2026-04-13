@@ -1,8 +1,6 @@
 package com.example.thyrocare;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.thyrocare.databinding.FragmentHomeBinding;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,189 +25,207 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private int totalPoints = 0;
-    private SharedPreferences sharedPreferences;
+    private boolean syncingTaskState = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // 1. Core Logic Setup
-        checkYearlyReset();
-        totalPoints = sharedPreferences.getInt("TOTAL_POINTS", 0);
+        Context context = requireContext();
+        AppStorage.resetYearIfNeeded(context);
+        totalPoints = AppStorage.getTotalPoints(context);
 
-        // 2. UI Setup
         setRandomQuote();
+        setPersonalGreeting();
         updateUI();
         updateYearlyProgressUI();
+        refreshDailyState();
+        attachTaskListeners();
 
-        // 3. Set Personal Greeting
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String username = bundle.getString("USER_NAME", "Ophelia");
-            binding.tvFragmentWelcome.setText("Hi " + username);
-        }
-
-        // 4. Setup Daily Locks
-        setupDailyLock("DONE_MEDICINE", binding.cbMedicine);
-        setupDailyLock("DONE_GYM", binding.cbGym);
-        setupDailyLock("DONE_GLUTEN_FREE", binding.cbGlutenFree);
-
-        // 5. Checkbox Listeners
-        binding.cbMedicine.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked && !isTaskDoneToday("DONE_MEDICINE")) {
-                playSparkleAnimation(binding.cbMedicine);
-                int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
-                if (hour < 6) {
-                    addPoints(50);
-                    Toast.makeText(getContext(), "Consistency Badge! +50 SP", Toast.LENGTH_SHORT).show();
-                } else {
-                    addPoints(10);
-                }
-
-                markTaskAsDone("DONE_MEDICINE");
-                incrementYearlyCount("YEAR_MEDS_COUNT");
-                binding.cbMedicine.setEnabled(false);
-            }
-        });
-
-        binding.cbGym.setOnCheckedChangeListener((v, isChecked) -> {
-            if (isChecked && !isTaskDoneToday("DONE_GYM")) {
-                playSparkleAnimation(binding.cbGym);
-                addPoints(20);
-                markTaskAsDone("DONE_GYM");
-                incrementYearlyCount("YEAR_GYM_COUNT");
-                binding.cbGym.setEnabled(false);
-            }
-        });
-
-        binding.cbGlutenFree.setOnCheckedChangeListener((v, isChecked) -> {
-            if (isChecked && !isTaskDoneToday("DONE_GLUTEN_FREE")) {
-                playSparkleAnimation(binding.cbGlutenFree);
-                addPoints(20);
-                markTaskAsDone("DONE_GLUTEN_FREE");
-                incrementYearlyCount("YEAR_FOOD_COUNT");
-                binding.cbGlutenFree.setEnabled(false);
+        binding.btnLogout.setOnClickListener(view -> {
+            if (requireActivity() instanceof home) {
+                ((home) requireActivity()).logoutToWelcome();
             }
         });
 
         return binding.getRoot();
     }
 
-    // --- QUOTES & UI REFRESH ---
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (binding != null) {
+            totalPoints = AppStorage.getTotalPoints(requireContext());
+            AppStorage.resetYearIfNeeded(requireContext());
+            updateUI();
+            updateYearlyProgressUI();
+            refreshDailyState();
+        }
+    }
+
+    private void setPersonalGreeting() {
+        Bundle bundle = getArguments();
+        String username = AppStorage.getDisplayName(requireContext());
+        if (bundle != null) {
+            username = bundle.getString("USER_NAME", username);
+        }
+        binding.tvFragmentWelcome.setText("Hi " + username);
+    }
 
     private void setRandomQuote() {
         String[] quotes = {
-                "Small daily magic creates lifelong mastery.",
-                "Your discipline is your strongest spell.",
-                "Nourish to flourish.",
-                "Consistency is the truest form of self-love.",
-                "Healing happens one choice at a time."
+                "Small daily steps create long-term healing.",
+                "Discipline is how your future self feels supported.",
+                "Nourish your body and your hormones will thank you.",
+                "Consistency is stronger than motivation.",
+                "Every check-in makes the next one easier."
         };
         int randomIndex = new Random().nextInt(quotes.length);
-        binding.tvQuote.setText("“" + quotes[randomIndex] + "”");
+        binding.tvQuote.setText("\"" + quotes[randomIndex] + "\"");
     }
 
-    // --- YEARLY PROGRESS TRACKER ---
-
-    private void checkYearlyReset() {
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        int savedYear = sharedPreferences.getInt("CURRENT_SAVED_YEAR", currentYear);
-
-        // If the year changes (e.g., from 2026 to 2027), reset all trackers to 0
-        if (currentYear != savedYear) {
-            sharedPreferences.edit()
-                    .putInt("CURRENT_SAVED_YEAR", currentYear)
-                    .putInt("YEAR_MEDS_COUNT", 0)
-                    .putInt("YEAR_GYM_COUNT", 0)
-                    .putInt("YEAR_FOOD_COUNT", 0)
-                    .apply();
-        }
+    private void refreshDailyState() {
+        binding.tvTodayDate.setText(formatTodayDisplay());
+        setupDailyLock("DONE_MEDICINE", binding.cbMedicine);
+        setupDailyLock("DONE_GYM", binding.cbGym);
+        setupDailyLock("DONE_GLUTEN_FREE", binding.cbGlutenFree);
     }
 
-    private void incrementYearlyCount(String key) {
-        int currentCount = sharedPreferences.getInt(key, 0);
-        sharedPreferences.edit().putInt(key, currentCount + 1).apply();
-        updateYearlyProgressUI();
+    private void attachTaskListeners() {
+        attachTaskListener(binding.cbMedicine, "DONE_MEDICINE", () -> {
+            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            if (hour < 6) {
+                addPoints(50);
+                Toast.makeText(getContext(), "Medication logged before 6:00 AM. +50 points.", Toast.LENGTH_SHORT).show();
+            } else {
+                addPoints(10);
+                Toast.makeText(getContext(), "Medication logged. +10 points.", Toast.LENGTH_SHORT).show();
+            }
+            AppStorage.incrementCounter(requireContext(), "YEAR_MEDS_COUNT");
+            updateYearlyProgressUI();
+        });
+
+        attachTaskListener(binding.cbGym, "DONE_GYM", () -> {
+            addPoints(20);
+            AppStorage.incrementCounter(requireContext(), "YEAR_GYM_COUNT");
+            updateYearlyProgressUI();
+        });
+
+        attachTaskListener(binding.cbGlutenFree, "DONE_GLUTEN_FREE", () -> {
+            addPoints(20);
+            AppStorage.incrementCounter(requireContext(), "YEAR_FOOD_COUNT");
+            updateYearlyProgressUI();
+        });
+    }
+
+    private void attachTaskListener(CheckBox checkBox, String taskKey, Runnable onAward) {
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (syncingTaskState) {
+                return;
+            }
+
+            if (!isChecked || isTaskDoneToday(taskKey)) {
+                return;
+            }
+
+            playSparkleAnimation(checkBox);
+            markTaskAsDone(taskKey);
+            onAward.run();
+            checkBox.setEnabled(false);
+        });
     }
 
     private void updateYearlyProgressUI() {
-        int medsCount = sharedPreferences.getInt("YEAR_MEDS_COUNT", 0);
-        int gymCount = sharedPreferences.getInt("YEAR_GYM_COUNT", 0);
-        int foodCount = sharedPreferences.getInt("YEAR_FOOD_COUNT", 0);
+        Context context = requireContext();
+        int medsCount = AppStorage.getCounter(context, "YEAR_MEDS_COUNT");
+        int gymCount = AppStorage.getCounter(context, "YEAR_GYM_COUNT");
+        int foodCount = AppStorage.getCounter(context, "YEAR_FOOD_COUNT");
 
-        binding.tvMedsProgress.setText("Morning Magic: " + medsCount + "/365");
+        binding.tvMedsProgress.setText("Medication discipline: " + medsCount + "/365");
         binding.pbMeds.setProgress(medsCount);
 
-        binding.tvGymProgress.setText("Fairy Strength: " + gymCount + "/365");
+        binding.tvGymProgress.setText("Movement support: " + gymCount + "/365");
         binding.pbGym.setProgress(gymCount);
 
-        binding.tvFoodProgress.setText("Pure Glow: " + foodCount + "/365");
+        binding.tvFoodProgress.setText("Nutrition support: " + foodCount + "/365");
         binding.pbFood.setProgress(foodCount);
     }
 
-    // --- DATE LOGIC HELPERS ---
-
     private String getTodayDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return sdf.format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    }
+
+    private String formatTodayDisplay() {
+        return new SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale.getDefault()).format(new Date());
     }
 
     private boolean isTaskDoneToday(String taskKey) {
-        return sharedPreferences.getString(taskKey, "").equals(getTodayDate());
+        return AppStorage.getTaskDate(requireContext(), taskKey).equals(getTodayDate());
     }
 
     private void markTaskAsDone(String taskKey) {
-        sharedPreferences.edit().putString(taskKey, getTodayDate()).apply();
+        AppStorage.setTaskDate(requireContext(), taskKey, getTodayDate());
     }
 
     private void setupDailyLock(String taskKey, CheckBox checkBox) {
-        if (isTaskDoneToday(taskKey)) {
-            checkBox.setOnCheckedChangeListener(null);
-            checkBox.setChecked(true);
-            checkBox.setEnabled(false);
-        }
+        syncingTaskState = true;
+        boolean doneToday = isTaskDoneToday(taskKey);
+        checkBox.setChecked(doneToday);
+        checkBox.setEnabled(!doneToday);
+        syncingTaskState = false;
     }
 
-    // --- POINTS & THEME LOGIC ---
-
-    private void addPoints(int pts) {
-        totalPoints += pts;
-        sharedPreferences.edit().putInt("TOTAL_POINTS", totalPoints).apply();
+    private void addPoints(int pointsToAdd) {
+        totalPoints += pointsToAdd;
+        AppStorage.setTotalPoints(requireContext(), totalPoints);
         updateUI();
+        if (requireActivity() instanceof home) {
+            ((home) requireActivity()).refreshChromeTheme();
+        }
     }
 
     private void updateUI() {
-        binding.tvPoints.setText("✨ " + totalPoints + " SP");
+        ThemePalette palette = ThemePalette.fromPoints(totalPoints);
+        binding.tvPoints.setText(totalPoints + " pts");
+        binding.tvLevel.setText(palette.levelName);
 
-        if (totalPoints > 1500) {
-            applyFairyTheme("#B2AC88"); // Sage Green
-        } else if (totalPoints > 500) {
-            applyFairyTheme("#C8A2C8"); // Lilac
+        if (palette.nextGoal > 0) {
+            int remaining = Math.max(0, palette.nextGoal - totalPoints);
+            binding.tvMilestone.setText(palette.statusMessage + " " + remaining + " points until the next unlock.");
         } else {
-            applyFairyTheme("#F4C2C2"); // Baby Pink
+            binding.tvMilestone.setText(palette.statusMessage);
         }
+
+        applyTheme(palette);
     }
 
-    private void applyFairyTheme(String colorCode) {
-        int color = Color.parseColor(colorCode);
-        ColorStateList colorList = ColorStateList.valueOf(color);
+    private void applyTheme(ThemePalette palette) {
+        ColorStateList accentList = ColorStateList.valueOf(palette.accentColor);
 
-        binding.tvPoints.setTextColor(color);
-        binding.cbMedicine.setButtonTintList(colorList);
-        binding.cbGym.setButtonTintList(colorList);
-        binding.cbGlutenFree.setButtonTintList(colorList);
-
-        binding.cardMedicine.setStrokeColor(color);
-        binding.cardGym.setStrokeColor(color);
-        binding.cardDiet.setStrokeColor(color);
+        binding.homeRoot.setBackgroundColor(palette.backgroundColor);
+        binding.headerCard.setCardBackgroundColor(palette.surfaceColor);
+        binding.tvPoints.setTextColor(palette.accentColor);
+        binding.tvLevel.setTextColor(palette.accentColor);
+        binding.cbMedicine.setButtonTintList(accentList);
+        binding.cbGym.setButtonTintList(accentList);
+        binding.cbGlutenFree.setButtonTintList(accentList);
+        binding.cardMedicine.setStrokeColor(palette.accentColor);
+        binding.cardGym.setStrokeColor(palette.accentColor);
+        binding.cardDiet.setStrokeColor(palette.accentColor);
+        binding.pbMeds.setProgressTintList(accentList);
+        binding.pbGym.setProgressTintList(accentList);
+        binding.pbFood.setProgressTintList(accentList);
+        binding.btnLogout.setBackgroundTintList(accentList);
     }
 
     private void playSparkleAnimation(View view) {
-        view.animate().scaleX(1.05f).scaleY(1.05f).setDuration(150)
-                .withEndAction(() -> view.animate().scaleX(1f).scaleY(1f).setDuration(150).start()).start();
+        view.animate()
+                .scaleX(1.05f)
+                .scaleY(1.05f)
+                .setDuration(150)
+                .withEndAction(() -> view.animate().scaleX(1f).scaleY(1f).setDuration(150).start())
+                .start();
     }
 
     @Override

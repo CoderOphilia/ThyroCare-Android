@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signupRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/thyrocare_shell"
+    android:fillViewport="true"
+    tools:context=".SignupActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gemini_generated_image_cwajprcwajprcwaj__1_" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/thyrocare_card"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup_title"
+                    android:textColor="@color/thyrocare_plum"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/signup_subtitle"
+                    android:textColor="@color/thyrocare_text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/signupName"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="@string/full_name_hint"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="16dp" />
+
+                <EditText
+                    android:id="@+id/signupEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp" />
+
+                <EditText
+                    android:id="@+id/signupPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="16dp" />
+
+                <EditText
+                    android:id="@+id/signupConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="@string/confirm_password_hint"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="16dp" />
+
+                <Button
+                    android:id="@+id/btnCreateAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="18dp"
+                    android:backgroundTint="@color/thyrocare_plum"
+                    android:text="@string/create_account"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnBackToLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/thyrocare_sage"
+                    android:text="@string/already_have_account"
+                    android:textAllCaps="false"
+                    android:textColor="@color/thyrocare_plum"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

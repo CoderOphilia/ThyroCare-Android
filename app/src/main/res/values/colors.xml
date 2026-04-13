@@ -7,4 +7,12 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="thyrocare_plum">#5F3F63</color>
+    <color name="thyrocare_pink">#F7D6E5</color>
+    <color name="thyrocare_lilac">#D8C1F0</color>
+    <color name="thyrocare_sage">#BFD8C3</color>
+    <color name="thyrocare_shell">#FFF8FB</color>
+    <color name="thyrocare_text_secondary">#6F6573</color>
+    <color name="thyrocare_card">#FFFFFFFF</color>
+    <color name="thyrocare_success">#4E8B63</color>
 </resources>

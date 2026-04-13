@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cycle_flow_options">
+        <item>Light</item>
+        <item>Moderate</item>
+        <item>Heavy</item>
+        <item>Very heavy</item>
+    </string-array>
+</resources>

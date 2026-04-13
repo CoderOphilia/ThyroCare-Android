@@ -1,188 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/homeRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/thyrocare_shell"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/headerCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/thyrocare_card"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvFragmentWelcome"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hi friend"
+                        android:textColor="@color/thyrocare_plum"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 pts"
+                        android:textColor="@color/thyrocare_plum"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvQuote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/dashboard_quote_default"
+                    android:textColor="@color/thyrocare_text_secondary"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/tvTodayLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/today_label"
+                    android:textColor="@color/thyrocare_plum"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTodayDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/thyrocare_text_secondary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvLevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Level 1: Pink Foundation"
+                    android:textColor="@color/thyrocare_plum"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvMilestone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/thyrocare_text_secondary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/logout"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/tvFragmentWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hi Ophelia"
-            android:textColor="#5F3F63"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tvPoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 SP"
-            android:textColor="#5F3F63"
+            android:layout_marginBottom="12dp"
+            android:text="@string/daily_progress_title"
+            android:textColor="@color/thyrocare_plum"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvQuote"
+            android:id="@+id/tvDailyResetHelper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="“Your discipline is your strongest spell.”"
-            android:textColor="#9E9E9E"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/tvFragmentWelcome" />
+            android:layout_marginBottom="12dp"
+            android:text="@string/daily_reset_helper"
+            android:textColor="@color/thyrocare_text_secondary"
+            android:textSize="13sp" />
 
-        <LinearLayout
-            android:id="@+id/checklist"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMedicine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/tvQuote">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/thyrocare_pink"
+            app:strokeWidth="2dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="✨ Daily Spells"
-                android:textColor="#5F3F63"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardMedicine"
+            <CheckBox
+                android:id="@+id/cbMedicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#F4C2C2"
-                app:strokeWidth="2dp">
-                <CheckBox
-                    android:id="@+id/cbMedicine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text=" Took Meds before 6:00 am"
-                    android:textColor="#5F3F63" />
-            </com.google.android.material.card.MaterialCardView>
+                android:padding="16dp"
+                android:text="@string/medication_task"
+                android:textColor="@color/thyrocare_plum" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardGym"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#C8A2C8"
-                app:strokeWidth="2dp">
-                <CheckBox
-                    android:id="@+id/cbGym"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text=" Went to the Gym"
-                    android:textColor="#5F3F63" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardDiet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#B2AC88"
-                app:strokeWidth="2dp">
-                <CheckBox
-                    android:id="@+id/cbGlutenFree"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text=" Ate only Gluten Free foods (Breakfast, Lunch, Dinner)"
-                    android:textColor="#5F3F63" />
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardGym"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/checklist">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/thyrocare_lilac"
+            app:strokeWidth="2dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/cbGym"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Yearly Journey (365 Days)"
-                android:textColor="#5F3F63"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:padding="16dp"
+                android:text="@string/gym_task"
+                android:textColor="@color/thyrocare_plum" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/tvMedsProgress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Morning Magic: 0/365"
-                android:textColor="#5F3F63"
-                android:textSize="14sp" />
-            <ProgressBar
-                android:id="@+id/pbMeds"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:max="365"
-                android:progress="0"
-                android:progressTint="#F4C2C2" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/thyrocare_sage"
+            app:strokeWidth="2dp">
 
-            <TextView
-                android:id="@+id/tvGymProgress"
+            <CheckBox
+                android:id="@+id/cbGlutenFree"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fairy Strength: 0/365"
-                android:textColor="#5F3F63"
-                android:textSize="14sp" />
-            <ProgressBar
-                android:id="@+id/pbGym"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:max="365"
-                android:progress="0"
-                android:progressTint="#C8A2C8" />
+                android:padding="16dp"
+                android:text="@string/food_task"
+                android:textColor="@color/thyrocare_plum" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/tvFoodProgress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pure Glow: 0/365"
-                android:textColor="#5F3F63"
-                android:textSize="14sp" />
-            <ProgressBar
-                android:id="@+id/pbFood"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="365"
-                android:progress="0"
-                android:progressTint="#B2AC88" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/yearly_progress_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvMedsProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medication discipline: 0/365"
+            android:textColor="@color/thyrocare_plum" />
+
+        <ProgressBar
+            android:id="@+id/pbMeds"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:max="365"
+            android:progress="0"
+            android:progressTint="@color/thyrocare_pink" />
+
+        <TextView
+            android:id="@+id/tvGymProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Movement support: 0/365"
+            android:textColor="@color/thyrocare_plum" />
+
+        <ProgressBar
+            android:id="@+id/pbGym"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:max="365"
+            android:progress="0"
+            android:progressTint="@color/thyrocare_lilac" />
+
+        <TextView
+            android:id="@+id/tvFoodProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nutrition support: 0/365"
+            android:textColor="@color/thyrocare_plum" />
+
+        <ProgressBar
+            android:id="@+id/pbFood"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="365"
+            android:progress="0"
+            android:progressTint="@color/thyrocare_sage" />
+
+    </LinearLayout>
 </ScrollView>

@@ -1,11 +1,15 @@
 package com.example.thyrocare;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.example.thyrocare.databinding.ActivityHomeBinding;
 
 public class home extends AppCompatActivity {
@@ -17,8 +21,11 @@ public class home extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.bottomNavigation.setBackgroundTintList(ColorStateList.valueOf(getColorCompat(android.R.color.white)));
+
         // Set Default Fragment (Home Dashboard) when app opens
         loadFragment(new HomeFragment());
+        refreshChromeTheme();
 
         // Setup Bottom Navigation Listener
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
@@ -53,5 +60,25 @@ public class home extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
+    }
+
+    public void refreshChromeTheme() {
+        ThemePalette palette = ThemePalette.fromPoints(AppStorage.getTotalPoints(this));
+        binding.bottomNavigation.setItemTextColor(ColorStateList.valueOf(palette.accentColor));
+        binding.bottomNavigation.setItemIconTintList(ColorStateList.valueOf(palette.accentColor));
+        binding.bottomNavigation.setBackgroundTintList(ColorStateList.valueOf(palette.surfaceColor));
+        binding.bottomTabNav.setBackgroundColor(palette.backgroundColor);
+    }
+
+    public void logoutToWelcome() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
+    private int getColorCompat(int colorRes) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getColor(colorRes);
+        }
+        return getResources().getColor(colorRes);
     }
 }

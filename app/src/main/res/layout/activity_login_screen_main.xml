@@ -1,68 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_screen_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5f3f63 "
+    android:background="@color/thyrocare_shell"
+    android:fillViewport="true"
     tools:context=".LoginScreen_main">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ThyroCare"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/loginEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <EditText
-        android:id="@+id/loginEmail"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="40dp"
-        android:background="@android:drawable/editbox_background"
-        android:hint="Username / Email"
-        android:inputType="textEmailAddress"
-        android:paddingStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gemini_generated_image_1tn2ot1tn2ot1tn2" />
 
-    <EditText
-        android:id="@+id/loginPassword"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:drawable/editbox_background"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/thyrocare_card"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="4dp">
 
-    <Button
-        android:id="@+id/loginBtn2"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="LOGIN"
-        android:textColor="#5F3F63"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPassword"
-        android:onClick = "onClickLoginBtn2"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mock_login_title"
+                    android:textColor="@color/thyrocare_plum"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mock_login_subtitle"
+                    android:textColor="@color/thyrocare_text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/loginEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="@string/username_hint"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp" />
+
+                <EditText
+                    android:id="@+id/loginPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="16dp" />
+
+                <Button
+                    android:id="@+id/loginBtn2"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="18dp"
+                    android:backgroundTint="@color/thyrocare_plum"
+                    android:text="@string/continue_to_dashboard"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnGoToSignup"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/thyrocare_sage"
+                    android:text="@string/need_account_prompt"
+                    android:textAllCaps="false"
+                    android:textColor="@color/thyrocare_plum"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

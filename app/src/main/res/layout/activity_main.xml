@@ -5,69 +5,89 @@
     android:id="@+id/login_screen_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/thyrocare_shell"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/LoginButton1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gemini_generated_image_8rh6ec8rh6ec8rh6" />
-
-    <Button
-        android:id="@+id/LoginButton1"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="140dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="9dp"
-        android:background="#5f3f63 "
-        android:backgroundTint="#5f3f63 "
-        android:stateListAnimator="@android:anim/fade_in"
-        android:text="Login"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:cornerRadius="@dimen/cardview_default_radius"
-        app:iconTintMode="src_in"
-        app:layout_constraintBottom_toTopOf="@+id/signupButton1"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/welcomeCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/thyrocare_card"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:strokeColor="#819F80"
-        app:strokeWidth="20dp"
-        android:onClick = "onClickLoginBtn"/>
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/signupButton1"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="140dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
-        android:background="#5F3F63"
-        android:stateListAnimator="@android:anim/fade_in"
-        android:text="Signup"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:cornerRadius="@dimen/cardview_default_radius"
-        app:iconTintMode="src_in"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="@+id/LoginButton1"
-        app:layout_constraintStart_toStartOf="@+id/LoginButton1"
-        app:layout_constraintTop_toBottomOf="@+id/LoginButton1"
-        app:strokeColor="#819F80"
-        app:strokeWidth="2dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome_title"
+                android:textColor="@color/thyrocare_plum"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/welcome_subtitle"
+                android:textColor="@color/thyrocare_text_secondary"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/LoginButton1"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/thyrocare_plum"
+                android:onClick="onClickLoginBtn"
+                android:text="@string/login"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/signupButton1"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/thyrocare_sage"
+                android:text="@string/signup"
+                android:textAllCaps="false"
+                android:textColor="@color/thyrocare_plum"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="541dp"
-        android:layout_height="265dp"
+        android:id="@+id/bottomImage"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupButton1"
         app:srcCompat="@drawable/gemini_generated_image_cwajprcwajprcwaj__1_" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="268dp"
+        android:layout_height="238dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/screenshot_2026_04_12_163258" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

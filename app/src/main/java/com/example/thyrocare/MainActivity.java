@@ -30,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
         loginButton1 = findViewById(R.id.LoginButton1);
         signupButton1 = findViewById(R.id.signupButton1);
-
+        signupButton1.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, SignupActivity.class)));
 
     }
 
     public void onClickLoginBtn(View loginBtn1) {
-               Intent intent = new Intent(MainActivity.this, LoginScreen_main.class);
-               startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, LoginScreen_main.class);
+        startActivity(intent);
     }
 }

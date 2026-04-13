@@ -1,12 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/thyrocare_shell"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Diet Fragment"
-        android:layout_centerInParent="true" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/diet_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/diet_subtitle"
+            android:textColor="@color/thyrocare_text_secondary"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etDietSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/diet_search_hint"
+            android:inputType="text"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/btnLoadRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/recipe_button_label"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/diet_directory_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/foodDirectoryContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/recipe_results_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/recipe_results_subtitle"
+            android:textColor="@color/thyrocare_text_secondary"
+            android:textSize="13sp" />
+
+        <ProgressBar
+            android:id="@+id/recipeProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvRecipeStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/thyrocare_text_secondary" />
+
+        <LinearLayout
+            android:id="@+id/recipeResultsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>

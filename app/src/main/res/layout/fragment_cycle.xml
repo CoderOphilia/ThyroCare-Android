@@ -1,12 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/thyrocare_shell"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cycle Fragment"
-        android:layout_centerInParent="true" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cycle_tracker_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/cycle_tracker_subtitle"
+            android:textColor="@color/thyrocare_text_secondary"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_start_date"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/select_end_date"
+            android:textAllCaps="false" />
+
+        <Spinner
+            android:id="@+id/spinnerFlow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Symptoms"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/cbFatigue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fatigue" />
+
+        <CheckBox
+            android:id="@+id/cbHeavyBleeding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Heavy bleeding" />
+
+        <CheckBox
+            android:id="@+id/cbMoodShift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mood shifts" />
+
+        <CheckBox
+            android:id="@+id/cbCramps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cramps" />
+
+        <CheckBox
+            android:id="@+id/cbIrregularity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Irregular timing" />
+
+        <EditText
+            android:id="@+id/etCycleNotes"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            android:gravity="top|start"
+            android:hint="@string/cycle_notes_hint"
+            android:inputType="textMultiLine"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/btnSaveCycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/save_cycle_entry"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/cycle_latest_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLatestSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/thyrocare_text_secondary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/cycle_calendar_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <CalendarView
+            android:id="@+id/cycleCalendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/cycle_selected_date_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvSelectedDateSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/thyrocare_text_secondary" />
+
+        <LinearLayout
+            android:id="@+id/selectedDateContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/cycle_history_title"
+            android:textColor="@color/thyrocare_plum"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/historyContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>

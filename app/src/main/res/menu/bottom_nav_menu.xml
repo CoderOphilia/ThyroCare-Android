@@ -3,13 +3,13 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@android:drawable/ic_menu_today"
-        android:title="Home"/>
+        android:title="@string/home"/>
     <item
         android:id="@+id/nav_period"
         android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="Cycle"/>
+        android:title="@string/track_cycle"/>
     <item
         android:id="@+id/nav_diet"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Diet"/>
+        android:title="@string/food_recommendation"/>
 </menu>
